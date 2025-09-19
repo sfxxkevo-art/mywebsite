@@ -1,125 +1,249 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>شحن ألعاب MVP</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>شحن فري فاير - الجازوي</title>
 <style>
-  body { font-family: Arial, sans-serif; background: #121212; color: #fff; margin:0; padding:0;}
-  header { background: #1e1e1e; padding: 15px; text-align: center;}
-  header h1 { margin:0; cursor:pointer;}
-  nav { display:flex; justify-content:center; gap:20px; background:#222; padding:10px;}
-  nav button { background:#333; color:#fff; border:none; padding:10px 15px; cursor:pointer; transition:0.3s; }
-  nav button:hover { background:#555; transform: scale(1.05);}
-  section { display:none; padding:20px;}
-  .active { display:block;}
-  .offers button { display:block; margin:10px 0; padding:10px; width:100%; cursor:pointer; background:#444; border:none; transition:0.3s;}
-  .offers button:hover { background:#666; transform: scale(1.02);}
-  .terms { background:#222; padding:10px; margin-bottom:10px; max-height:200px; overflow:auto;}
-  input[type="text"], input[type="file"], select { width:100%; padding:8px; margin:5px 0 10px 0; }
-  label { display:block; margin-top:10px; }
-  .submit-btn { background:#0a84ff; color:#fff; border:none; padding:10px; width:100%; cursor:pointer; transition:0.3s; }
-  .submit-btn:hover { background:#36f; transform: scale(1.02);}
-  .confirmation { background:#0a0; color:#fff; padding:10px; margin-top:10px; display:none;}
-  .blur-message { text-align:center; font-size:18px; color:#aaa; margin-top:50px; backdrop-filter: blur(5px); padding:50px;}
+  :root{
+    --bg:#07101a; --panel:#081427; --accent:#ff6b4a; --text:#eef2f7;
+  }
+  *{box-sizing:border-box;font-family:Arial, Helvetica, sans-serif}
+  body{margin:0;background:linear-gradient(135deg,#07101a 0%, #112033 100%);color:var(--text);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+  .wrap{width:100%;max-width:1000px;border-radius:14px;padding:18px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.06));box-shadow:0 12px 50px rgba(0,0,0,0.6)}
+  header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+  .brand h1{margin:0;font-size:22px;color:var(--accent)}
+  .brand p{margin:0;font-size:13px;color:#a9bbca}
+  .games{display:flex;gap:10px;margin-top:14px}
+  .game-card{flex:1;background:var(--panel);padding:14px;border-radius:10px;text-align:center;cursor:pointer;transition:transform .18s, box-shadow .18s}
+  .game-card:hover{transform:translateY(-6px);box-shadow:0 12px 30px rgba(0,0,0,0.6)}
+  .game-card.disabled{opacity:0.45;filter:grayscale(20%);cursor:default}
+  .game-card img{width:80px;height:80px;object-fit:cover;border-radius:8px}
+  .grid{display:grid;grid-template-columns:1fr 360px;gap:18px;margin-top:18px}
+  .left{padding:12px}
+  .right{padding:14px;background:linear-gradient(180deg,#071324,#081427);border-radius:10px}
+  label{display:block;margin-bottom:6px;color:#bfcfe0;font-size:13px}
+  select,input[type="text"],input[type="tel"]{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--text);margin-bottom:10px}
+  .packages{display:flex;flex-wrap:wrap;gap:8px}
+  .pkg{padding:10px 12px;background:#0b1220;border-radius:10px;cursor:pointer;border:1px solid rgba(255,255,255,0.03)}
+  .pkg.selected{outline:3px solid rgba(255,107,74,0.12);transform:translateY(-4px)}
+  .summary{background:#061226;padding:12px;border-radius:10px;margin-top:12px;text-align:center}
+  .btn{background:var(--accent);border:none;padding:12px 14px;color:#fff;border-radius:10px;font-weight:700;cursor:pointer;width:100%}
+  .muted{color:#9fb0c9;font-size:13px}
+  .terms{display:flex;gap:8px;align-items:center;margin-top:10px}
+  .footer{margin-top:12px;color:#9fb0c9;font-size:13px;text-align:center}
+  .badge{display:inline-block;background:#0b1220;padding:6px 10px;border-radius:8px;font-weight:700;color:var(--accent)}
+  .fade-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;z-index:999;visibility:hidden;opacity:0;transition:opacity .2s, visibility .2s}
+  .fade-overlay.show{visibility:visible;opacity:1}
+  .panel{background:#071427;padding:18px;border-radius:10px;width:90%;max-width:520px}
+  .close-x{float:left;cursor:pointer;color:#c9d7e6}
+  @media(max-width:920px){.grid{grid-template-columns:1fr}.right{order:2}}
 </style>
 </head>
 <body>
 
-<header>
-  <h1 onclick="showSection('home')">شحن الألعاب</h1>
-</header>
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <h1>منصة شحن — الجازوي يولد</h1>
+      <p>شحن آمن يدويًا | فودافون كاش فقط | اسحب الجواهر بعد التأكيد</p>
+    </div>
+    <div class="badge">Developed by أحمد الجازوي</div>
+  </header>
 
-<nav>
-  <button onclick="showSection('freefire')">فري فاير</button>
-  <button onclick="showSection('pubg')">PUBG</button>
-  <button onclick="showSection('support')">الدعم</button>
-</nav>
+  <div class="games">
+    <div id="game-ff" class="game-card" data-game="Free Fire">
+      <img src="https://i.postimg.cc/9fz6r9vQ/freefire.png" alt="Free Fire">
+      <h3>Free Fire</h3>
+      <p class="muted">شحن متاح الآن</p>
+    </div>
 
-<section id="home" class="active">
-  <h2>مرحبا بك في موقع شحن الألعاب</h2>
-  <p>اختر اللعبة من الأعلى للبدء.</p>
-</section>
-
-<section id="freefire">
-  <h2>شحن فري فاير</h2>
-  <div class="terms">
-    <p>📌 شروط التحويل:</p>
-    <ul>
-      <li>تحويل المبلغ لمحفظة فودافون كاش فقط: 01026433794</li>
-      <li>لو تم تحويل مبلغ أقل من المطلوب، سيتم رد المبلغ للمرسل خلال 48 ساعة</li>
-      <li>إذا أرسل الرصيد بدل التحويل النقدي، قد تفقد حق استرجاع المبلغ</li>
-      <li>سيتم الشحن خلال ساعة إلى 18 ساعة</li>
-      <li>إذا لم تصلك الجواهر خلال 24 ساعة، راسلنا على الانستغرام: <a href="https://www.instagram.com/sfx.v12?igsh=OTkzbDQ1cWc0cnVw" target="_blank">@sfx.v12</a></li>
-    </ul>
-  </div>
-  <label><input type="checkbox" id="acceptTerms"> أوافق على كل الشروط</label>
-  
-  <div class="offers">
-    <p>اختر العرض:</p>
-    <button onclick="selectOffer(50,35)">50 جوهرة - 35جنيه</button>
-    <button onclick="selectOffer(100,65)">100 جوهرة - 65جنيه</button>
-    <button onclick="selectOffer(200,115)">200 جوهرة - 115جنيه</button>
-    <button onclick="selectOffer(300,165)">300 جوهرة - 165جنيه</button>
-    <button onclick="selectOffer(500,275)">500 جوهرة - 275جنيه</button>
-    <button onclick="selectOffer(1060,550)">1060 جوهرة - 550جنيه</button>
+    <div id="game-pubg" class="game-card disabled" data-game="PUBG">
+      <img src="https://i.postimg.cc/3x3Z7r9L/pubg.png" alt="PUBG">
+      <h3>PUBG</h3>
+      <p class="muted">قريبًا — جاري التحضير</p>
+    </div>
   </div>
 
-  <form id="freefireForm" style="display:none;" target="_blank" action="https://forms.gle/tiSYbDpNUJUK9dBb7" method="POST" enctype="multipart/form-data">
-    <label>أدخل ID اللعبة:</label>
-    <input type="text" name="gameID" required>
-    
-    <label>اسم صاحب المحفظة:</label>
-    <input type="text" name="walletName" required>
-    
-    <label>رقم المحفظة التي تم التحويل منها:</label>
-    <input type="text" name="walletNumber" required>
-    
-    <label>صورة التحويل:</label>
-    <input type="file" name="transferImage" accept="image/*" required>
-    
-    <input type="hidden" id="selectedAmount" name="amount">
-    <input type="hidden" id="selectedPrice" name="price">
-    
-    <button type="submit" class="submit-btn">إرسال الطلب</button>
-  </form>
+  <div class="grid">
+    <div class="left">
+      <label>اختر اللعبة</label>
+      <select id="game-select">
+        <option value="Free Fire">Free Fire</option>
+        <option value="PUBG">PUBG (قريبًا)</option>
+      </select>
 
-  <div class="confirmation" id="confirmationMessage">
-    ✅ شكراً! سيتم شحن الجواهر خلال 1 إلى 18 ساعة، وفي حال وجود مشكلة سيتم رد المبلغ.
+      <label>أدخل Player ID</label>
+      <input type="text" id="playerId" placeholder="ادخل الآي دي بتاعك">
+
+      <label>اختر الباقة</label>
+      <div class="packages" id="packages">
+        <!-- الباقات هتتولد بالـJS -->
+      </div>
+
+      <div class="summary" id="summaryBox">
+        <div id="chosenText" style="font-size:18px;color:#ffd8c8">لم تختار باقة بعد</div>
+        <div class="muted" id="priceText">السعر هيظهر هنا</div>
+        <div style="margin-top:10px;color:#bfcfe0">سيتم التحويل إلى: <strong>01026433794</strong> (Vodafone Cash)</div>
+      </div>
+
+      <div style="margin-top:12px">
+        <label>اسم صاحب المحفظة المرسلة</label>
+        <input type="text" id="senderName" placeholder="اسم اللي عمل التحويل">
+
+        <label>رقم المحفظة المرسلة</label>
+        <input type="tel" id="senderNumber" placeholder="مثال: 010xxxxxxxx">
+
+        <div class="terms">
+          <input type="checkbox" id="agree" />
+          <label for="agree" class="muted">أوافق على الشروط والأحكام</label>
+        </div>
+
+        <button id="openForm" class="btn" style="margin-top:10px">إرسال الطلب وفتح رفع الإيصال</button>
+        <div class="muted" style="margin-top:8px">مهم: فورم رفع الإيصال يطلب منك رفع صورة التحويل، وتأكّد إنك حولت للمحمولة النقدي فقط.</div>
+      </div>
+    </div>
+
+    <div class="right">
+      <div style="background:linear-gradient(90deg,#081427,#0a2436);padding:12px;border-radius:10px">
+        <h3 style="margin:0;color:var(--accent)">تفاصيل مهمة</h3>
+        <p class="muted" style="margin-top:8px">
+          التحويل على فودافون كاش فقط: <strong>01026433794</strong><br>
+          لو اتبعت حاجه غلط (رصيد بدل تحويل) فقد تفقد حق الاسترجاع.
+        </p>
+      </div>
+
+      <div style="margin-top:12px;background:#071427;padding:12px;border-radius:10px">
+        <h4 style="margin:0">مواعيد الشحن</h4>
+        <p class="muted" style="margin-top:6px">المدة المتوقعة: من ساعة إلى 18 ساعة. الحد الأقصى: 24 ساعة. لو لم تصلك الجواهر بعد 24 ساعة تواصل عبر الإنستجرام.</p>
+        <a href="https://www.instagram.com/sfx.v12?igsh=OTkzbDQ1cWc0cnVw" target="_blank" class="muted">Instagram: @sfx.v12</a>
+      </div>
+
+      <div style="margin-top:12px;background:#081427;padding:12px;border-radius:10px">
+        <h4 style="margin:0">الأسعار (صافي)</h4>
+        <ul class="muted" style="margin-top:8px;line-height:1.7">
+          <li>50 جوهرة — 35 جنيه</li>
+          <li>100 جوهرة — 65 جنيه</li>
+          <li>200 جوهرة — 115 جنيه</li>
+          <li>300 جوهرة — 165 جنيه</li>
+          <li>500 جوهرة — 275 جنيه</li>
+          <li>1060 جوهرة — 550 جنيه</li>
+        </ul>
+      </div>
+    </div>
   </div>
-</section>
 
-<section id="pubg">
-  <div class="blur-message">
-    🎮 قسم PUBG سيتم تفعيله قريباً! ترقبوا.
+  <div class="footer">© الجازوي يولد — للطلبات و الدعم تواصل على الانستجرام</div>
+</div>
+
+<!-- شاشة تغبيش لببجي (عند الضغط على PUBG) -->
+<div id="overlay" class="fade-overlay">
+  <div class="panel">
+    <div class="close-x" id="closeOverlay">✖</div>
+    <h3 style="margin-top:0">ببجي — سيتم توفر الشحن قريبًا</h3>
+    <p class="muted">حالياً نقوم بتجهيز القسم. تابعنا على الإنستجرام لمعرفة موعد الإطلاق.</p>
   </div>
-</section>
-
-<section id="support">
-  <h2>الدعم والإبلاغ</h2>
-  <p>للتواصل مع الدعم أو الإبلاغ، الرجاء استخدام <a href="https://forms.gle/tiSYbDpNUJUK9dBb7" target="_blank">هذا النموذج</a></p>
-</section>
+</div>
 
 <script>
-function showSection(sectionId){
-  document.querySelectorAll('section').forEach(sec=>sec.classList.remove('active'));
-  document.getElementById(sectionId).classList.add('active');
-}
+/* ====== بيانات الباقات ====== */
+const packagesData = [
+  {id:'p50', label:'50 جوهرة', price:35},
+  {id:'p100', label:'100 جوهرة', price:65},
+  {id:'p200', label:'200 جوهرة', price:115},
+  {id:'p300', label:'300 جوهرة', price:165},
+  {id:'p500', label:'500 جوهرة', price:275},
+  {id:'p1060', label:'1060 جوهرة', price:550}
+];
 
-function selectOffer(amount,price){
-  if(!document.getElementById('acceptTerms').checked){
-    alert("⚠️ يجب الموافقة على الشروط أولاً!");
-    return;
-  }
-  document.getElementById('freefireForm').style.display = 'block';
-  document.getElementById('selectedAmount').value = amount;
-  document.getElementById('selectedPrice').value = price;
-  alert(`لقد اخترت ${amount} جوهرة مقابل ${price} جنيه.\nرقم المحفظة: 01026433794`);
-}
+const packagesContainer = document.getElementById('packages');
+let selectedPkg = null;
 
-document.getElementById('freefireForm').addEventListener('submit', function(){
-  document.getElementById('confirmationMessage').style.display = 'block';
+/* generate package buttons */
+packagesData.forEach(p=>{
+  const btn = document.createElement('div');
+  btn.className = 'pkg';
+  btn.dataset.id = p.id;
+  btn.dataset.price = p.price;
+  btn.innerHTML = `<strong>${p.label}</strong><div class="muted">${p.price} جنيه</div>`;
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('.pkg').forEach(x=>x.classList.remove('selected'));
+    btn.classList.add('selected');
+    selectedPkg = p;
+    updateSummary();
+  });
+  packagesContainer.appendChild(btn);
 });
+
+/* update summary display */
+function updateSummary(){
+  const game = document.getElementById('game-select').value;
+  const id = document.getElementById('playerId').value || '—';
+  if(!selectedPkg){
+    document.getElementById('chosenText').textContent = 'لم تختار باقة بعد';
+    document.getElementById('priceText').textContent = 'السعر سيظهر بعد اختيار الباقة';
+  } else {
+    document.getElementById('chosenText').textContent = `${selectedPkg.label} — ${game}`;
+    document.getElementById('priceText').textContent = `السعر: ${selectedPkg.price} جنيه · التحويل إلى: 01026433794 (Vodafone Cash)`;
+  }
+}
+
+/* hook inputs */
+document.getElementById('game-select').addEventListener('change', (e)=>{
+  const v = e.target.value;
+  if(v === 'PUBG'){
+    // افتح overlay بدل السماح بالتعبئة
+    document.getElementById('overlay').classList.add('show');
+    // force selector back to Free Fire for safety
+    document.getElementById('game-select').value = 'Free Fire';
+  }
+  updateSummary();
+});
+
+document.getElementById('playerId').addEventListener('input', updateSummary);
+
+/* overlay close */
+document.getElementById('closeOverlay').addEventListener('click', ()=>{
+  document.getElementById('overlay').classList.remove('show');
+});
+
+/* game cards click */
+document.getElementById('game-pubg').addEventListener('click', ()=>{ document.getElementById('overlay').classList.add('show'); });
+document.getElementById('game-ff').addEventListener('click', ()=>{ document.getElementById('game-select').value='Free Fire'; updateSummary(); });
+
+/* ====== GOOGLE FORM PREFILL ======
+  - حاليا الكود مفعل يفتح الفورم العام (لو ما جهزش prefill). لو عايز تعبّي الحقول تلقائياً
+    لازم تستخرج رابط prefilled من Google Forms وتبدّل القيمة تحت.
+  - لو هتديلي رابط prefilled أنا أعدله لك وأرفع الكود جاهز.
+*/
+let GOOGLE_FORM_PREFILL_LINK = "https://docs.google.com/forms/d/e/1FAIpQLSdy1fcwLoYOap5BH3ywINW3qa0Ju_dGES-2HTJVaYHzQMeenQ/viewform?usp=preview";
+
+/* build prefill and open */
+document.getElementById('openForm').addEventListener('click', ()=>{
+  const agree = document.getElementById('agree').checked;
+  if(!agree){ alert('لازم تقبل الشروط عشان تكمل'); return; }
+  if(!selectedPkg){ alert('اختار باقة الأول'); return; }
+  const playerId = document.getElementById('playerId').value.trim();
+  if(playerId.length < 2){ alert('اكتب Player ID صالح'); return; }
+  const senderName = document.getElementById('senderName').value.trim();
+  const senderNumber = document.getElementById('senderNumber').value.trim();
+  if(senderName.length < 2 || senderNumber.length < 7){ if(!confirm('معلومات المحفظة يبدو ناقصة. هل تريد الاستمرار؟')) return; }
+
+  // استبدال القيم في الرابط لو هو prefilled link فيه placeholders
+  const pre = GOOGLE_FORM_PREFILL_LINK
+    .replace(/{GAME}/g, encodeURIComponent('Free Fire'))
+    .replace(/{PLAYERID}/g, encodeURIComponent(playerId))
+    .replace(/{PACKAGE}/g, encodeURIComponent(selectedPkg.label + ' | ' + selectedPkg.price + ' جنيه'))
+    .replace(/{SENDERNAME}/g, encodeURIComponent(senderName))
+    .replace(/{SENDERNUMBER}/g, encodeURIComponent(senderNumber));
+
+  // افتح الفورم في تاب جديد
+  window.open(pre, '_blank');
+  alert('تم فتح صفحة رفع الإيصال، ارفع الصورة واضغط إرسال. الطلب هيوصلنا في جدول Google Sheets.');
+});
+
+/* initial */
+updateSummary();
 </script>
 
 </body>

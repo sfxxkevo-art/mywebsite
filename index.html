@@ -1,14 +1,89 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>أول موقع</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>موقعي - عرض الجازوي</title>
+  <style>
+    body{font-family:Arial, sans-serif;margin:0;background:#0f1724;color:#eef2f7;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px}
+    .wrap{width:100%;max-width:900px;background:linear-gradient(180deg,#0b122066,#07101a);border-radius:12px;padding:20px;box-shadow:0 10px 40px rgba(0,0,0,0.6)}
+    h1{margin:0 0 8px 0;color:#ff6b4a;text-align:center}
+    .desc{color:#b9c6d8;text-align:center;margin-bottom:16px}
+    .controls{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:18px}
+    .controls button{padding:10px 12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:#0b1220;color:#fff;cursor:pointer}
+    .display-card{background:#071226;padding:18px;border-radius:10px;text-align:center;box-shadow:inset 0 1px 0 rgba(255,255,255,0.02)}
+    .display-card h2{font-size:34px;margin:0;color:#ffd8c8}
+    .display-card p{margin:6px 0 0 0;color:#9fb0c9}
+    .meta{margin-top:12px;text-align:center;color:#9fb0c9;font-size:14px}
+    .small{font-size:13px;color:#9fb0c9}
+  </style>
 </head>
-<body style="background-color: #222; text-align: center;">
+<body>
+  <div class="wrap">
+    <h1>تجربة عرض الجازوي</h1>
+    <div class="desc">اضغط على أي اختيار تحت عشان تظهر كلمة <strong>الجازوي يولد</strong> — وبنفس الوقت يظهر اسم المطور.</div>
 
-  <h1 style="color: #ff5733; font-size: 60px; font-family: Arial, sans-serif;">
-    الجازوي يولد
-  </h1>
+    <!-- أزرار الاختيارات -->
+    <div class="controls">
+      <button data-action="ads">الإعلانات</button>
+      <button data-action="developer">اسم المطور</button>
+      <button data-action="promo">ترند اليوم</button>
+      <button data-action="headline">عنوان رئيسي</button>
+      <button data-action="random">اختيار عشوائي</button>
+    </div>
 
+    <!-- المكان اللي هيعرض الكلمة واسم المطور -->
+    <div class="display-card">
+      <h2 id="main-text">اضغط على اختيار من فوق</h2>
+      <p id="sub-text" class="small">&nbsp;</p>
+      <div class="meta" id="meta-info">المطور: <strong id="dev-name">—</strong></div>
+    </div>
+  </div>
+
+<script>
+  // بيانات المطور والنص الثابت
+  const FIXED_TEXT = 'الجازوي يولد';
+  const DEVELOPER = 'أحمد عبدالستار الصباري الجازوي';
+
+  // عناصر
+  const mainText = document.getElementById('main-text');
+  const subText = document.getElementById('sub-text');
+  const devName = document.getElementById('dev-name');
+  const buttons = document.querySelectorAll('.controls button');
+
+  // عند الضغط على أي زر
+  buttons.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const action = btn.dataset.action || '';
+      // كل الحالات تعرض نفس الكلمة
+      mainText.textContent = FIXED_TEXT;
+
+      // يمكن نعرض رسالة فرعية مختلفة حسب الزر لو حبيت
+      if(action === 'ads'){
+        subText.textContent = 'قائم بالإعلان الآن — اضغط للمزيد';
+      } else if(action === 'developer'){
+        subText.textContent = 'عرض بيانات المطور';
+      } else if(action === 'promo'){
+        subText.textContent = 'عرض عرض ترويجي مؤقت';
+      } else if(action === 'headline'){
+        subText.textContent = 'عنوان مميز لصفحتك';
+      } else if(action === 'random'){
+        subText.textContent = 'اختيار عشوائي تمّ';
+      } else {
+        subText.textContent = '';
+      }
+
+      // دائماً نعرض اسم المطور
+      devName.textContent = DEVELOPER;
+
+      // تأثير بسيط (flash)
+      mainText.style.opacity = '0';
+      setTimeout(()=> mainText.style.opacity = '1', 60);
+    });
+  });
+
+  // لو عايز تفتح الصفحة والكلمة تكون ظاهرة فوراً:
+  // mainText.textContent = FIXED_TEXT; devName.textContent = DEVELOPER;
+</script>
 </body>
 </html>

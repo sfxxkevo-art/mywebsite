@@ -1,89 +1,126 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>موقعي - عرض الجازوي</title>
-  <style>
-    body{font-family:Arial, sans-serif;margin:0;background:#0f1724;color:#eef2f7;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px}
-    .wrap{width:100%;max-width:900px;background:linear-gradient(180deg,#0b122066,#07101a);border-radius:12px;padding:20px;box-shadow:0 10px 40px rgba(0,0,0,0.6)}
-    h1{margin:0 0 8px 0;color:#ff6b4a;text-align:center}
-    .desc{color:#b9c6d8;text-align:center;margin-bottom:16px}
-    .controls{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:18px}
-    .controls button{padding:10px 12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:#0b1220;color:#fff;cursor:pointer}
-    .display-card{background:#071226;padding:18px;border-radius:10px;text-align:center;box-shadow:inset 0 1px 0 rgba(255,255,255,0.02)}
-    .display-card h2{font-size:34px;margin:0;color:#ffd8c8}
-    .display-card p{margin:6px 0 0 0;color:#9fb0c9}
-    .meta{margin-top:12px;text-align:center;color:#9fb0c9;font-size:14px}
-    .small{font-size:13px;color:#9fb0c9}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>شحن ألعاب MVP</title>
+<style>
+  body { font-family: Arial, sans-serif; background: #121212; color: #fff; margin:0; padding:0;}
+  header { background: #1e1e1e; padding: 15px; text-align: center;}
+  header h1 { margin:0; cursor:pointer;}
+  nav { display:flex; justify-content:center; gap:20px; background:#222; padding:10px;}
+  nav button { background:#333; color:#fff; border:none; padding:10px 15px; cursor:pointer; transition:0.3s; }
+  nav button:hover { background:#555; transform: scale(1.05);}
+  section { display:none; padding:20px;}
+  .active { display:block;}
+  .offers button { display:block; margin:10px 0; padding:10px; width:100%; cursor:pointer; background:#444; border:none; transition:0.3s;}
+  .offers button:hover { background:#666; transform: scale(1.02);}
+  .terms { background:#222; padding:10px; margin-bottom:10px; max-height:200px; overflow:auto;}
+  input[type="text"], input[type="file"], select { width:100%; padding:8px; margin:5px 0 10px 0; }
+  label { display:block; margin-top:10px; }
+  .submit-btn { background:#0a84ff; color:#fff; border:none; padding:10px; width:100%; cursor:pointer; transition:0.3s; }
+  .submit-btn:hover { background:#36f; transform: scale(1.02);}
+  .confirmation { background:#0a0; color:#fff; padding:10px; margin-top:10px; display:none;}
+  .blur-message { text-align:center; font-size:18px; color:#aaa; margin-top:50px; backdrop-filter: blur(5px); padding:50px;}
+</style>
 </head>
 <body>
-  <div class="wrap">
-    <h1>تجربة عرض الجازوي</h1>
-    <div class="desc">اضغط على أي اختيار تحت عشان تظهر كلمة <strong>الجازوي يولد</strong> — وبنفس الوقت يظهر اسم المطور.</div>
 
-    <!-- أزرار الاختيارات -->
-    <div class="controls">
-      <button data-action="ads">الإعلانات</button>
-      <button data-action="developer">اسم المطور</button>
-      <button data-action="promo">ترند اليوم</button>
-      <button data-action="headline">عنوان رئيسي</button>
-      <button data-action="random">اختيار عشوائي</button>
-    </div>
+<header>
+  <h1 onclick="showSection('home')">شحن الألعاب</h1>
+</header>
 
-    <!-- المكان اللي هيعرض الكلمة واسم المطور -->
-    <div class="display-card">
-      <h2 id="main-text">اضغط على اختيار من فوق</h2>
-      <p id="sub-text" class="small">&nbsp;</p>
-      <div class="meta" id="meta-info">المطور: <strong id="dev-name">—</strong></div>
-    </div>
+<nav>
+  <button onclick="showSection('freefire')">فري فاير</button>
+  <button onclick="showSection('pubg')">PUBG</button>
+  <button onclick="showSection('support')">الدعم</button>
+</nav>
+
+<section id="home" class="active">
+  <h2>مرحبا بك في موقع شحن الألعاب</h2>
+  <p>اختر اللعبة من الأعلى للبدء.</p>
+</section>
+
+<section id="freefire">
+  <h2>شحن فري فاير</h2>
+  <div class="terms">
+    <p>📌 شروط التحويل:</p>
+    <ul>
+      <li>تحويل المبلغ لمحفظة فودافون كاش فقط: 01026433794</li>
+      <li>لو تم تحويل مبلغ أقل من المطلوب، سيتم رد المبلغ للمرسل خلال 48 ساعة</li>
+      <li>إذا أرسل الرصيد بدل التحويل النقدي، قد تفقد حق استرجاع المبلغ</li>
+      <li>سيتم الشحن خلال ساعة إلى 18 ساعة</li>
+      <li>إذا لم تصلك الجواهر خلال 24 ساعة، راسلنا على الانستغرام: <a href="https://www.instagram.com/sfx.v12?igsh=OTkzbDQ1cWc0cnVw" target="_blank">@sfx.v12</a></li>
+    </ul>
+  </div>
+  <label><input type="checkbox" id="acceptTerms"> أوافق على كل الشروط</label>
+  
+  <div class="offers">
+    <p>اختر العرض:</p>
+    <button onclick="selectOffer(50,35)">50 جوهرة - 35 جنيه</button>
+    <button onclick="selectOffer(100,65)">100 جوهرة - 65 جنيه</button>
+    <button onclick="selectOffer(200,115)">200 جوهرة - 115 جنيه</button>
+    <button onclick="selectOffer(300,165)">300 جوهرة - 165 جنيه</button>
+    <button onclick="selectOffer(500,275)">500 جوهرة - 275 جنيه</button>
+    <button onclick="selectOffer(1060,550)">1060 جوهرة - 550 جنيه</button>
   </div>
 
+  <form id="freefireForm" style="display:none;" target="_blank" action="https://forms.gle/tiSYbDpNUJUK9dBb7" method="POST" enctype="multipart/form-data">
+    <label>أدخل ID اللعبة:</label>
+    <input type="text" name="gameID" required>
+    
+    <label>اسم صاحب المحفظة:</label>
+    <input type="text" name="walletName" required>
+    
+    <label>رقم المحفظة التي تم التحويل منها:</label>
+    <input type="text" name="walletNumber" required>
+    
+    <label>صورة التحويل:</label>
+    <input type="file" name="transferImage" accept="image/*" required>
+    
+    <input type="hidden" id="selectedAmount" name="amount">
+    <input type="hidden" id="selectedPrice" name="price">
+    
+    <button type="submit" class="submit-btn">إرسال الطلب</button>
+  </form>
+
+  <div class="confirmation" id="confirmationMessage">
+    ✅ شكراً! سيتم شحن الجواهر خلال 1 إلى 18 ساعة، وفي حال وجود مشكلة سيتم رد المبلغ.
+  </div>
+</section>
+
+<section id="pubg">
+  <div class="blur-message">
+    🎮 قسم PUBG سيتم تفعيله قريباً! ترقبوا.
+  </div>
+</section>
+
+<section id="support">
+  <h2>الدعم والإبلاغ</h2>
+  <p>للتواصل مع الدعم أو الإبلاغ، الرجاء استخدام <a href="https://forms.gle/tiSYbDpNUJUK9dBb7" target="_blank">هذا النموذج</a></p>
+</section>
+
 <script>
-  // بيانات المطور والنص الثابت
-  const FIXED_TEXT = 'الجازوي يولد';
-  const DEVELOPER = 'أحمد عبدالستار الصباري الجازوي';
+function showSection(sectionId){
+  document.querySelectorAll('section').forEach(sec=>sec.classList.remove('active'));
+  document.getElementById(sectionId).classList.add('active');
+}
 
-  // عناصر
-  const mainText = document.getElementById('main-text');
-  const subText = document.getElementById('sub-text');
-  const devName = document.getElementById('dev-name');
-  const buttons = document.querySelectorAll('.controls button');
+function selectOffer(amount,price){
+  if(!document.getElementById('acceptTerms').checked){
+    alert("⚠️ يجب الموافقة على الشروط أولاً!");
+    return;
+  }
+  document.getElementById('freefireForm').style.display = 'block';
+  document.getElementById('selectedAmount').value = amount;
+  document.getElementById('selectedPrice').value = price;
+  alert(`لقد اخترت ${amount} جوهرة مقابل ${price} جنيه.\nرقم المحفظة: 01026433794`);
+}
 
-  // عند الضغط على أي زر
-  buttons.forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      const action = btn.dataset.action || '';
-      // كل الحالات تعرض نفس الكلمة
-      mainText.textContent = FIXED_TEXT;
-
-      // يمكن نعرض رسالة فرعية مختلفة حسب الزر لو حبيت
-      if(action === 'ads'){
-        subText.textContent = 'قائم بالإعلان الآن — اضغط للمزيد';
-      } else if(action === 'developer'){
-        subText.textContent = 'عرض بيانات المطور';
-      } else if(action === 'promo'){
-        subText.textContent = 'عرض عرض ترويجي مؤقت';
-      } else if(action === 'headline'){
-        subText.textContent = 'عنوان مميز لصفحتك';
-      } else if(action === 'random'){
-        subText.textContent = 'اختيار عشوائي تمّ';
-      } else {
-        subText.textContent = '';
-      }
-
-      // دائماً نعرض اسم المطور
-      devName.textContent = DEVELOPER;
-
-      // تأثير بسيط (flash)
-      mainText.style.opacity = '0';
-      setTimeout(()=> mainText.style.opacity = '1', 60);
-    });
-  });
-
-  // لو عايز تفتح الصفحة والكلمة تكون ظاهرة فوراً:
-  // mainText.textContent = FIXED_TEXT; devName.textContent = DEVELOPER;
+document.getElementById('freefireForm').addEventListener('submit', function(){
+  document.getElementById('confirmationMessage').style.display = 'block';
+});
 </script>
+
 </body>
 </html>
